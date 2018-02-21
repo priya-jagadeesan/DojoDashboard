@@ -1,0 +1,32 @@
+<h1>New student </h1>
+
+<div>
+    <% flash.each do |key, value| %>
+        <% if key == 'error' %>
+            <h3 class='errors'>Errors</h3>
+            <ul class="error_container">
+            <% value.each do |field, errors| %>
+                <% errors.each do |error| %>
+                    <li><%= field.capitalize %> <%= error %></li>
+                <% end %>
+            <% end %>
+            <ul>
+        <% end %>
+    <% end %>
+</div>
+
+<form action="/dojos/<%= @dojo_id.id %>/students" method="post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>"><br><br>
+First Name : <input type="text" name="first_name" placeholder="First Name"><br><br>
+    Last Name : <input type="text" name="last_name" placeholder="Last Name"><br><br>
+    email   : <input type="email" name="email" placeholder="abc@xyz.com"><br><br>
+    Dojo  : <select name='branch'>
+        <option value='<%= @dojo_id.id %>' selected><%= @dojo_id.branch %></option>
+    <% @dojos.each do |dojo| %>
+        <option value='<%= dojo.id %>'><%= dojo.branch %></option>
+    <% end %>
+    </select>
+    <input type='submit' value='Create'><br><br><br><br>
+</form>
+<a href='/dojos'>Home</a><br><br>
+<a href='/dojos/<%= @dojo_id.id %>'><%= @dojo_id.branch %></a>
